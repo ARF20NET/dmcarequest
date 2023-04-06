@@ -8,7 +8,15 @@ if (isset($_POST["company"])) {
 	$url = $_POST["url"];
 	$reason = $_POST["reason"];
 
-	file_put_contents("dmcareq_".date("d-m-Y").".txt", "Company: ".$company."\nFull Name: ".$name."\nEmail: ".$mail."\nPhone number: ".$num."\nInfringing URL: ".$url."\nReason: ".$reason);
+	$body = "Company: ".$company."\nFull Name: ".$name."\nEmail: ".$mail."\nPhone number: ".$num."\nInfringing URL: ".$url."\nReason: ".$reason;
+
+	$extra = "";
+	while (file_exists("dmcareq_".date("d-m-Y").$extra.".txt")) {
+		$extra .= "_";
+	}
+
+	file_put_contents("dmcareq_".date("d-m-Y").$extra.".txt", $body);
+	mail("arf20@arf20.com", "DMCA Letter", $body);
 }
 
 ?>
