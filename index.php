@@ -8,7 +8,7 @@ if (isset($_POST["company"])) {
 	$url = $_POST["url"];
 	$reason = $_POST["reason"];
 
-	$body = "Company: ".$company."\nFull Name: ".$name."\nEmail: ".$mail."\nPhone number: ".$num."\nInfringing URL: ".$url."\nReason: ".$reason;
+	$body = "Company: ".$company."\nFull Name: ".$name."\nEmail: ".$mail."\nPhone number: ".$num."\nInfringing URL: ".$url."\nReason: ".$reason."\n==DMCAREQ END==\n\n";
 
 	$extra = "";
 	while (file_exists("dmcareq_".date("d-m-Y").$extra.".txt")) {
@@ -16,7 +16,10 @@ if (isset($_POST["company"])) {
 	}
 
 	file_put_contents("dmcareq_".date("d-m-Y").$extra.".txt", $body);
-	mail("arf20@arf20.com", "DMCA Letter", $body);
+
+	if (mail("arf20@arf20.com", "DMCA Letter", $body, "From: dmcaform@arf20.com"))
+		echo "Message accepted";
+	else echo "Error, message rejected";
 }
 
 ?>
